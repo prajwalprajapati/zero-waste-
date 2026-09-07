@@ -1,573 +1,548 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EcoTrack - Zero Waste</title>
-
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: Arial, sans-serif;
-        }
-
-        body {
-            background: #f5f8f5;
-            color: #173b25;
-        }
-
-        button {
-            cursor: pointer;
-        }
-
-        /* ================= AUTH ================= */
-
-        .auth-page {
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: linear-gradient(135deg, #dff5e5, #f5fff7);
-            padding: 20px;
-        }
-
-        .auth-card {
-            width: 390px;
-            background: white;
-            padding: 40px;
-            border-radius: 24px;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.12);
-        }
-
-        .logo {
-            text-align: center;
-            font-size: 30px;
-            font-weight: bold;
-            color: #168044;
-            margin-bottom: 8px;
-        }
-
-        .auth-subtitle {
-            text-align: center;
-            color: #777;
-            margin-bottom: 30px;
-        }
-
-        .auth-card input {
-            width: 100%;
-            padding: 14px;
-            margin-bottom: 14px;
-            border: 1px solid #d8ded9;
-            border-radius: 10px;
-            outline: none;
-            font-size: 15px;
-        }
-
-        .auth-card input:focus {
-            border-color: #168044;
-        }
-
-        .primary-btn {
-            width: 100%;
-            padding: 14px;
-            border: none;
-            border-radius: 10px;
-            background: #168044;
-            color: white;
-            font-size: 16px;
-            font-weight: bold;
-        }
-
-        .primary-btn:hover {
-            background: #106534;
-        }
-
-        .switch-text {
-            text-align: center;
-            margin-top: 18px;
-            color: #777;
-        }
-
-        .switch-text span {
-            color: #168044;
-            font-weight: bold;
-            cursor: pointer;
-        }
-
-
-        /* ================= APP ================= */
-
-        .app {
-            display: none;
-            min-height: 100vh;
-        }
-
-        .navbar {
-            height: 72px;
-            background: white;
-            border-bottom: 1px solid #e5ebe6;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 6%;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-
-        .brand {
-            font-size: 24px;
-            font-weight: bold;
-            color: #168044;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 8px;
-        }
-
-        .nav-links button {
-            border: none;
-            background: transparent;
-            padding: 10px 15px;
-            border-radius: 8px;
-            color: #506157;
-            font-size: 14px;
-        }
-
-        .nav-links button:hover {
-            background: #eef7f0;
-            color: #168044;
-        }
-
-        .logout {
-            color: #d34b4b !important;
-        }
-
-
-        /* ================= PAGES ================= */
-
-        .content {
-            max-width: 1200px;
-            margin: auto;
-            padding: 35px 6%;
-        }
-
-        .page {
-            display: none;
-        }
-
-        .page.active {
-            display: block;
-        }
-
-
-        /* ================= DASHBOARD ================= */
-
-        .welcome {
-            margin-bottom: 28px;
-        }
-
-        .welcome h1 {
-            font-size: 32px;
-            margin-bottom: 8px;
-        }
-
-        .welcome p {
-            color: #758078;
-        }
-
-        .stats {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 18px;
-            margin-bottom: 25px;
-        }
-
-        .stat-card {
-            background: white;
-            padding: 22px;
-            border-radius: 18px;
-            border: 1px solid #e8eee9;
-        }
-
-        .stat-icon {
-            font-size: 30px;
-            margin-bottom: 12px;
-        }
-
-        .stat-card h3 {
-            font-size: 28px;
-            margin-bottom: 5px;
-        }
-
-        .stat-card p {
-            color: #7c8780;
-            font-size: 14px;
-        }
-
-
-        /* ================= HERO ================= */
-
-        .hero {
-            background: linear-gradient(120deg, #176d3d, #27975a);
-            color: white;
-            border-radius: 24px;
-            padding: 42px;
-            margin-bottom: 28px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            overflow: hidden;
-        }
-
-        .hero-text {
-            max-width: 650px;
-        }
-
-        .hero h2 {
-            font-size: 36px;
-            margin-bottom: 12px;
-        }
-
-        .hero p {
-            line-height: 1.6;
-            opacity: 0.9;
-            margin-bottom: 22px;
-        }
-
-        .hero-btn {
-            background: white;
-            color: #176d3d;
-            border: none;
-            padding: 13px 22px;
-            border-radius: 10px;
-            font-weight: bold;
-        }
-
-        .hero-emoji {
-            font-size: 100px;
-        }
-
-
-        /* ================= GRID ================= */
-
-        .two-column {
-            display: grid;
-            grid-template-columns: 1.5fr 1fr;
-            gap: 22px;
-        }
-
-        .panel {
-            background: white;
-            border: 1px solid #e8eee9;
-            border-radius: 18px;
-            padding: 25px;
-        }
-
-        .panel-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .panel-header h3 {
-            font-size: 19px;
-        }
-
-
-        /* ================= CATEGORIES ================= */
-
-        .category-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-        }
-
-        .category {
-            padding: 20px;
-            background: #f8fbf8;
-            border-radius: 14px;
-            border: 1px solid #edf1ed;
-        }
-
-        .category-icon {
-            font-size: 30px;
-            margin-bottom: 8px;
-        }
-
-        .category h4 {
-            margin-bottom: 5px;
-        }
-
-        .category p {
-            font-size: 13px;
-            color: #78827b;
-        }
-
-
-        /* ================= PROGRESS ================= */
-
-        .progress-box {
-            margin-bottom: 22px;
-        }
-
-        .progress-info {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 8px;
-            font-size: 14px;
-        }
-
-        .progress-bar {
-            width: 100%;
-            height: 12px;
-            background: #e9efea;
-            border-radius: 20px;
-            overflow: hidden;
-        }
-
-        .progress-fill {
-            height: 100%;
-            width: 68%;
-            background: #28a65f;
-            border-radius: 20px;
-        }
-
-
-        /* ================= TRACKER ================= */
-
-        .tracker-card {
-            max-width: 700px;
-            margin: auto;
-            background: white;
-            padding: 30px;
-            border-radius: 20px;
-            border: 1px solid #e5ebe6;
-        }
-
-        .tracker-form {
-            display: grid;
-            grid-template-columns: 1fr 150px 100px;
-            gap: 10px;
-            margin-top: 20px;
-        }
-
-        .tracker-form input,
-        .tracker-form select {
-            padding: 13px;
-            border: 1px solid #d7ded8;
-            border-radius: 9px;
-            outline: none;
-        }
-
-        .tracker-form button {
-            border: none;
-            background: #168044;
-            color: white;
-            border-radius: 9px;
-            font-weight: bold;
-        }
-
-        .activity {
-            margin-top: 25px;
-        }
-
-        .activity-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 14px;
-            background: #f8fbf8;
-            border-radius: 10px;
-            margin-top: 8px;
-        }
-
-        .activity-left {
-            display: flex;
-            gap: 12px;
-            align-items: center;
-        }
-
-        .activity-icon {
-            font-size: 22px;
-        }
-
-        .points {
-            color: #168044;
-            font-weight: bold;
-        }
-
-
-        /* ================= TIPS ================= */
-
-        .tip {
-            padding: 17px;
-            background: #f8fbf8;
-            border-radius: 12px;
-            margin-bottom: 10px;
-            border-left: 4px solid #28a65f;
-        }
-
-
-        /* ================= PROFILE ================= */
-
-        .profile-card {
-            max-width: 600px;
-            margin: auto;
-            background: white;
-            padding: 35px;
-            border-radius: 20px;
-            text-align: center;
-            border: 1px solid #e5ebe6;
-        }
-
-        .profile-icon {
-            width: 90px;
-            height: 90px;
-            background: #dff3e4;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 45px;
-            margin: auto;
-        }
-
-        .profile-card h2 {
-            margin: 15px 0 5px;
-        }
-
-        .profile-card p {
-            color: #78827b;
-        }
-
-        .profile-stats {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            margin-top: 25px;
-        }
-
-        .profile-stat {
-            background: #f7faf7;
-            padding: 15px;
-            border-radius: 10px;
-        }
-
-
-        /* ================= FOOTER ================= */
-
-        footer {
-            text-align: center;
-            padding: 35px;
-            color: #829087;
-            font-size: 14px;
-        }
-
-
-        /* ================= MOBILE ================= */
-
-        @media (max-width: 850px) {
-
-            .stats {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .two-column {
-                grid-template-columns: 1fr;
-            }
-
-            .hero {
-                padding: 30px;
-            }
-
-            .hero-emoji {
-                display: none;
-            }
-        }
-
-        @media (max-width: 600px) {
-
-            .navbar {
-                padding: 0 4%;
-            }
-
-            .brand {
-                font-size: 19px;
-            }
-
-            .nav-links {
-                gap: 0;
-            }
-
-            .nav-links button {
-                padding: 8px;
-                font-size: 12px;
-            }
-
-            .content {
-                padding: 25px 4%;
-            }
-
-            .stats {
-                grid-template-columns: 1fr 1fr;
-            }
-
-            .hero h2 {
-                font-size: 27px;
-            }
-
-            .tracker-form {
-                grid-template-columns: 1fr;
-            }
-
-            .category-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .profile-stats {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EcoTrack - Zero Waste</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    background:#f5f8f5;
+    color:#173b25;
+}
+
+button,input,select{
+    font:inherit;
+}
+
+button{
+    cursor:pointer;
+}
+
+.auth-page{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:20px;
+    background:linear-gradient(135deg,#dff5e5,#f5fff7);
+}
+
+.auth-card{
+    width:100%;
+    max-width:390px;
+    background:white;
+    padding:35px;
+    border-radius:24px;
+    box-shadow:0 20px 50px rgba(0,0,0,.12);
+}
+
+.logo{
+    text-align:center;
+    font-size:30px;
+    font-weight:bold;
+    color:#168044;
+    margin-bottom:8px;
+}
+
+.auth-subtitle{
+    text-align:center;
+    color:#777;
+    margin-bottom:25px;
+}
+
+.auth-card input{
+    display:block;
+    width:100%;
+    padding:14px;
+    margin-bottom:14px;
+    border:1px solid #d8ded9;
+    border-radius:10px;
+    outline:none;
+    font-size:15px;
+    background:white;
+    color:#173b25;
+}
+
+.auth-card input:focus{
+    border-color:#168044;
+    box-shadow:0 0 0 2px rgba(22,128,68,.1);
+}
+
+.primary-btn{
+    width:100%;
+    padding:14px;
+    border:0;
+    border-radius:10px;
+    background:#168044;
+    color:white;
+    font-weight:bold;
+    font-size:16px;
+}
+
+.primary-btn:hover{
+    background:#106534;
+}
+
+.switch-text{
+    text-align:center;
+    margin-top:18px;
+    color:#777;
+}
+
+.switch-text span{
+    color:#168044;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.message{
+    text-align:center;
+    margin-bottom:15px;
+    font-size:14px;
+    min-height:18px;
+}
+
+.app{
+    display:none;
+    min-height:100vh;
+}
+
+.navbar{
+    min-height:72px;
+    background:white;
+    border-bottom:1px solid #e5ebe6;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:12px 6%;
+    position:sticky;
+    top:0;
+    z-index:100;
+}
+
+.brand{
+    font-size:24px;
+    font-weight:bold;
+    color:#168044;
+}
+
+.nav-links{
+    display:flex;
+    gap:5px;
+    flex-wrap:wrap;
+}
+
+.nav-links button{
+    border:0;
+    background:transparent;
+    padding:9px 12px;
+    border-radius:8px;
+    color:#506157;
+}
+
+.nav-links button:hover{
+    background:#eef7f0;
+    color:#168044;
+}
+
+.logout{
+    color:#d34b4b!important;
+}
+
+.content{
+    max-width:1200px;
+    margin:auto;
+    padding:35px 6%;
+}
+
+.page{
+    display:none;
+}
+
+.page.active{
+    display:block;
+}
+
+.welcome{
+    margin-bottom:28px;
+}
+
+.welcome h1{
+    font-size:32px;
+    margin-bottom:8px;
+}
+
+.welcome p{
+    color:#758078;
+}
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:18px;
+    margin-bottom:25px;
+}
+
+.stat-card{
+    background:white;
+    padding:22px;
+    border-radius:18px;
+    border:1px solid #e8eee9;
+}
+
+.stat-icon{
+    font-size:30px;
+    margin-bottom:12px;
+}
+
+.stat-card h3{
+    font-size:28px;
+    margin-bottom:5px;
+}
+
+.stat-card p{
+    color:#7c8780;
+    font-size:14px;
+}
+
+.hero{
+    background:linear-gradient(120deg,#176d3d,#27975a);
+    color:white;
+    border-radius:24px;
+    padding:42px;
+    margin-bottom:28px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.hero-text{
+    max-width:650px;
+}
+
+.hero h2{
+    font-size:36px;
+    margin-bottom:12px;
+}
+
+.hero p{
+    line-height:1.6;
+    opacity:.9;
+    margin-bottom:22px;
+}
+
+.hero-btn{
+    background:white;
+    color:#176d3d;
+    border:0;
+    padding:13px 22px;
+    border-radius:10px;
+    font-weight:bold;
+}
+
+.hero-emoji{
+    font-size:100px;
+}
+
+.two-column{
+    display:grid;
+    grid-template-columns:1.5fr 1fr;
+    gap:22px;
+}
+
+.panel{
+    background:white;
+    border:1px solid #e8eee9;
+    border-radius:18px;
+    padding:25px;
+}
+
+.panel-header{
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:20px;
+}
+
+.category-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:15px;
+}
+
+.category{
+    padding:20px;
+    background:#f8fbf8;
+    border-radius:14px;
+    border:1px solid #edf1ed;
+}
+
+.category-icon{
+    font-size:30px;
+    margin-bottom:8px;
+}
+
+.category h4{
+    margin-bottom:5px;
+}
+
+.category p{
+    font-size:13px;
+    color:#78827b;
+}
+
+.progress-box{
+    margin-bottom:22px;
+}
+
+.progress-info{
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:8px;
+    font-size:14px;
+}
+
+.progress-bar{
+    width:100%;
+    height:12px;
+    background:#e9efea;
+    border-radius:20px;
+    overflow:hidden;
+}
+
+.progress-fill{
+    height:100%;
+    width:68%;
+    background:#28a65f;
+}
+
+.tracker-card{
+    max-width:750px;
+    margin:auto;
+    background:white;
+    padding:30px;
+    border-radius:20px;
+    border:1px solid #e5ebe6;
+}
+
+.tracker-form{
+    display:grid;
+    grid-template-columns:1fr 150px 100px;
+    gap:10px;
+    margin-top:20px;
+}
+
+.tracker-form input,
+.tracker-form select{
+    width:100%;
+    padding:13px;
+    border:1px solid #d7ded8;
+    border-radius:9px;
+    outline:none;
+    background:white;
+}
+
+.tracker-form button{
+    border:0;
+    background:#168044;
+    color:white;
+    border-radius:9px;
+    font-weight:bold;
+}
+
+.activity{
+    margin-top:25px;
+}
+
+.activity-item{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:14px;
+    background:#f8fbf8;
+    border-radius:10px;
+    margin-top:8px;
+}
+
+.activity-left{
+    display:flex;
+    gap:12px;
+    align-items:center;
+}
+
+.points{
+    color:#168044;
+    font-weight:bold;
+}
+
+.tip{
+    padding:17px;
+    background:#f8fbf8;
+    border-radius:12px;
+    margin-bottom:10px;
+    border-left:4px solid #28a65f;
+}
+
+.profile-card{
+    max-width:600px;
+    margin:auto;
+    background:white;
+    padding:35px;
+    border-radius:20px;
+    text-align:center;
+    border:1px solid #e5ebe6;
+}
+
+.profile-icon{
+    width:90px;
+    height:90px;
+    background:#dff3e4;
+    border-radius:50%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:45px;
+    margin:auto;
+}
+
+.profile-card h2{
+    margin:15px 0 5px;
+}
+
+.profile-card p{
+    color:#78827b;
+}
+
+.profile-stats{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:10px;
+    margin-top:25px;
+}
+
+.profile-stat{
+    background:#f7faf7;
+    padding:15px;
+    border-radius:10px;
+}
+
+footer{
+    text-align:center;
+    padding:35px;
+    color:#829087;
+}
+
+@media(max-width:850px){
+    .stats{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .two-column{
+        grid-template-columns:1fr;
+    }
+
+    .hero{
+        padding:30px;
+    }
+
+    .hero-emoji{
+        display:none;
+    }
+}
+
+@media(max-width:600px){
+    .navbar{
+        padding:12px 4%;
+        align-items:flex-start;
+        gap:10px;
+    }
+
+    .brand{
+        font-size:19px;
+        white-space:nowrap;
+    }
+
+    .nav-links{
+        justify-content:flex-end;
+    }
+
+    .nav-links button{
+        padding:7px;
+        font-size:11px;
+    }
+
+    .content{
+        padding:25px 4%;
+    }
+
+    .stats{
+        grid-template-columns:1fr 1fr;
+        gap:10px;
+    }
+
+    .stat-card{
+        padding:16px;
+    }
+
+    .hero h2{
+        font-size:27px;
+    }
+
+    .tracker-form{
+        grid-template-columns:1fr;
+    }
+
+    .category-grid{
+        grid-template-columns:1fr;
+    }
+
+    .profile-stats{
+        grid-template-columns:1fr;
+    }
+
+    .auth-card{
+        padding:28px 22px;
+    }
+}
+</style>
 </head>
 
 <body>
 
-
-<!-- ===================================================== -->
 <!-- LOGIN -->
-<!-- ===================================================== -->
-
 <div id="loginPage" class="auth-page">
-
     <div class="auth-card">
 
-        <div class="logo">
-            ♻️ EcoTrack
-        </div>
+        <div class="logo">♻️ EcoTrack</div>
 
         <p class="auth-subtitle">
             Your journey towards zero waste
         </p>
 
+        <div id="loginMessage" class="message"></div>
+
         <input
             type="email"
             id="loginEmail"
             placeholder="Email address"
+            autocomplete="email"
         >
 
         <input
             type="password"
             id="loginPassword"
             placeholder="Password"
+            autocomplete="current-password"
         >
 
-        <button class="primary-btn" onclick="login()">
+        <button type="button" class="primary-btn" onclick="login()">
             Login
         </button>
 
@@ -577,45 +552,43 @@
         </div>
 
     </div>
-
 </div>
 
 
-<!-- ===================================================== -->
 <!-- REGISTER -->
-<!-- ===================================================== -->
-
 <div id="registerPage" class="auth-page" style="display:none;">
-
     <div class="auth-card">
 
-        <div class="logo">
-            🌱 Join EcoTrack
-        </div>
+        <div class="logo">🌱 Join EcoTrack</div>
 
         <p class="auth-subtitle">
             Start making an impact today
         </p>
 
+        <div id="registerMessage" class="message"></div>
+
         <input
             type="text"
             id="registerName"
             placeholder="Full name"
+            autocomplete="name"
         >
 
         <input
             type="email"
             id="registerEmail"
             placeholder="Email address"
+            autocomplete="email"
         >
 
         <input
             type="password"
             id="registerPassword"
             placeholder="Create password"
+            autocomplete="new-password"
         >
 
-        <button class="primary-btn" onclick="register()">
+        <button type="button" class="primary-btn" onclick="register()">
             Create Account
         </button>
 
@@ -625,337 +598,745 @@
         </div>
 
     </div>
+</div>
+
+
+<!-- APP -->
+<div id="app" class="app">
+
+<nav class="navbar">
+    <div class="brand">♻️ EcoTrack</div>
+
+    <div class="nav-links">
+        <button onclick="showPage('dashboard')">Dashboard</button>
+        <button onclick="showPage('tracker')">Tracker</button>
+        <button onclick="showPage('tips')">Tips</button>
+        <button onclick="showPage('profile')">Profile</button>
+        <button class="logout" onclick="logout()">Logout</button>
+    </div>
+</nav>
+
+
+<!-- DASHBOARD -->
+<main id="dashboardPage" class="content page active">
+
+    <div class="welcome">
+        <h1>
+            Welcome back, <span id="welcomeName">User</span> 👋
+        </h1>
+        <p>Every small action creates a cleaner tomorrow.</p>
+    </div>
+
+    <div class="hero">
+        <div class="hero-text">
+            <h2>Make your waste count.</h2>
+            <p>
+                Track your daily waste, earn points,
+                build better habits and contribute
+                towards a zero-waste future.
+            </p>
+
+            <button class="hero-btn" onclick="showPage('tracker')">
+                + Track Waste
+            </button>
+        </div>
+
+        <div class="hero-emoji">🌍</div>
+    </div>
+
+
+    <div class="stats">
+
+        <div class="stat-card">
+            <div class="stat-icon">♻️</div>
+            <h3 id="totalWaste">0</h3>
+            <p>Items Tracked</p>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-icon">⭐</div>
+            <h3 id="totalPoints">0</h3>
+            <p>Eco Points</p>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-icon">🌳</div>
+            <h3 id="treesSaved">0</h3>
+            <p>Tree Impact</p>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-icon">🔥</div>
+            <h3>7</h3>
+            <p>Day Streak</p>
+        </div>
+
+    </div>
+
+
+    <div class="two-column">
+
+        <div class="panel">
+
+            <div class="panel-header">
+                <h3>Waste Categories</h3>
+            </div>
+
+            <div class="category-grid">
+
+                <div class="category">
+                    <div class="category-icon">🍎</div>
+                    <h4>Organic</h4>
+                    <p>Food & biodegradable waste</p>
+                </div>
+
+                <div class="category">
+                    <div class="category-icon">🥤</div>
+                    <h4>Plastic</h4>
+                    <p>Bottles & packaging</p>
+                </div>
+
+                <div class="category">
+                    <div class="category-icon">📦</div>
+                    <h4>Paper</h4>
+                    <p>Paper & cardboard</p>
+                </div>
+
+                <div class="category">
+                    <div class="category-icon">🔋</div>
+                    <h4>E-Waste</h4>
+                    <p>Electronics & batteries</p>
+                </div>
+
+            </div>
+        </div>
+
+
+        <div class="panel">
+
+            <div class="panel-header">
+                <h3>Monthly Goal</h3>
+                <strong>68%</strong>
+            </div>
+
+            <div class="progress-box">
+
+                <div class="progress-info">
+                    <span>Waste reduction</span>
+                    <span>68 / 100</span>
+                </div>
+
+                <div class="progress-bar">
+                    <div class="progress-fill"></div>
+                </div>
+
+            </div>
+
+            <p style="color:#77827a;line-height:1.6;">
+                You're doing great! Keep tracking
+                your waste to reach your monthly goal.
+            </p>
+
+        </div>
+
+    </div>
+
+</main>
+
+
+<!-- TRACKER -->
+<main id="trackerPage" class="content page">
+
+    <div class="welcome">
+        <h1>Waste Tracker ♻️</h1>
+        <p>Record what you throw away and make it count.</p>
+    </div>
+
+    <div class="tracker-card">
+
+        <h2>Add Waste Item</h2>
+
+        <div class="tracker-form">
+
+            <input
+                type="text"
+                id="wasteName"
+                placeholder="Example: Plastic bottle"
+            >
+
+            <select id="wasteCategory">
+                <option value="Plastic">Plastic</option>
+                <option value="Organic">Organic</option>
+                <option value="Paper">Paper</option>
+                <option value="E-Waste">E-Waste</option>
+            </select>
+
+            <button type="button" onclick="addWaste()">
+                Add
+            </button>
+
+        </div>
+
+
+        <div class="activity">
+
+            <h3>Recent Activity</h3>
+
+            <div id="activityList">
+                <p style="color:#777;margin-top:15px;">
+                    No waste tracked yet.
+                </p>
+            </div>
+
+        </div>
+
+    </div>
+
+</main>
+
+
+<!-- TIPS -->
+<main id="tipsPage" class="content page">
+
+    <div class="welcome">
+        <h1>Zero Waste Tips 🌱</h1>
+        <p>Small habits can create a big impact.</p>
+    </div>
+
+    <div class="panel">
+
+        <div class="tip">
+            ♻️ Carry a reusable water bottle instead of buying plastic bottles.
+        </div>
+
+        <div class="tip">
+            🛍️ Use cloth bags instead of single-use plastic bags.
+        </div>
+
+        <div class="tip">
+            🍎 Compost your food and organic waste whenever possible.
+        </div>
+
+        <div class="tip">
+            📦 Reuse cardboard boxes before throwing them away.
+        </div>
+
+        <div class="tip">
+            🔋 Dispose of batteries and electronics through proper e-waste channels.
+        </div>
+
+        <div class="tip">
+            💡 Buy only what you actually need and avoid unnecessary packaging.
+        </div>
+
+    </div>
+
+</main>
+
+
+<!-- PROFILE -->
+<main id="profilePage" class="content page">
+
+    <div class="profile-card">
+
+        <div class="profile-icon">👤</div>
+
+        <h2 id="profileName">User</h2>
+
+        <p id="profileEmail">email@example.com</p>
+
+        <div class="profile-stats">
+
+            <div class="profile-stat">
+                <strong id="profileWaste">0</strong>
+                <p>Items</p>
+            </div>
+
+            <div class="profile-stat">
+                <strong id="profilePoints">0</strong>
+                <p>Points</p>
+            </div>
+
+            <div class="profile-stat">
+                <strong>7</strong>
+                <p>Streak</p>
+            </div>
+
+        </div>
+
+    </div>
+
+</main>
+
+
+<footer>
+    © 2026 EcoTrack • Building a zero-waste future 🌍
+</footer>
 
 </div>
 
 
-<!-- ===================================================== -->
-<!-- MAIN APP -->
-<!-- ===================================================== -->
+<script>
 
-<div id="app" class="app">
+/* =========================
+   HELPER
+========================= */
 
-    <!-- NAVBAR -->
+function getUser(){
+    return JSON.parse(localStorage.getItem("ecoUser"));
+}
 
-    <nav class="navbar">
 
-        <div class="brand">
-            ♻️ EcoTrack
-        </div>
+/* =========================
+   LOGIN
+========================= */
 
-        <div class="nav-links">
+function login(){
 
-            <button onclick="showPage('dashboard')">
-                Dashboard
-            </button>
+    const email =
+        document.getElementById("loginEmail").value.trim();
 
-            <button onclick="showPage('tracker')">
-                Tracker
-            </button>
+    const password =
+        document.getElementById("loginPassword").value;
 
-            <button onclick="showPage('tips')">
-                Tips
-            </button>
+    const message =
+        document.getElementById("loginMessage");
 
-            <button onclick="showPage('profile')">
-                Profile
-            </button>
 
-            <button
-                class="logout"
-                onclick="logout()"
-            >
-                Logout
-            </button>
+    if(email === "" || password === ""){
+        message.textContent = "Please enter email and password.";
+        message.style.color = "#d34b4b";
+        return;
+    }
 
-        </div>
 
-    </nav>
+    const savedUser =
+        localStorage.getItem("ecoUser");
 
 
-    <!-- ================================================= -->
-    <!-- DASHBOARD -->
-    <!-- ================================================= -->
+    if(!savedUser){
+        message.textContent =
+            "No account found. Please create an account first.";
+        message.style.color = "#d34b4b";
+        return;
+    }
 
-    <main
-        id="dashboardPage"
-        class="content page active"
-    >
 
-        <div class="welcome">
+    const user = JSON.parse(savedUser);
 
-            <h1>
-                Welcome back, <span id="welcomeName">User</span> 👋
-            </h1>
 
-            <p>
-                Every small action creates a cleaner tomorrow.
-            </p>
+    if(
+        email.toLowerCase() === user.email.toLowerCase()
+        &&
+        password === user.password
+    ){
 
-        </div>
+        localStorage.setItem("ecoLoggedIn","true");
 
+        message.textContent = "";
 
-        <!-- HERO -->
+        openApp();
 
-        <div class="hero">
+    }else{
 
-            <div class="hero-text">
+        message.textContent =
+            "Incorrect email or password.";
 
-                <h2>
-                    Make your waste count.
-                </h2>
+        message.style.color = "#d34b4b";
+    }
+}
 
-                <p>
-                    Track your daily waste, earn points,
-                    build better habits and contribute
-                    towards a zero-waste future.
-                </p>
 
-                <button
-                    class="hero-btn"
-                    onclick="showPage('tracker')"
-                >
-                    + Track Waste
-                </button>
+/* =========================
+   REGISTER
+========================= */
 
-            </div>
+function register(){
 
-            <div class="hero-emoji">
-                🌍
-            </div>
+    const name =
+        document.getElementById("registerName").value.trim();
 
-        </div>
+    const email =
+        document.getElementById("registerEmail").value.trim();
 
+    const password =
+        document.getElementById("registerPassword").value;
 
-        <!-- STATS -->
+    const message =
+        document.getElementById("registerMessage");
 
-        <div class="stats">
 
-            <div class="stat-card">
+    if(name === "" || email === "" || password === ""){
 
-                <div class="stat-icon">♻️</div>
+        message.textContent =
+            "Please fill all fields.";
 
-                <h3 id="totalWaste">
-                    0
-                </h3>
+        message.style.color = "#d34b4b";
 
-                <p>
-                    Items Tracked
-                </p>
+        return;
+    }
 
-            </div>
 
+    if(password.length < 4){
 
-            <div class="stat-card">
+        message.textContent =
+            "Password must be at least 4 characters.";
 
-                <div class="stat-icon">⭐</div>
+        message.style.color = "#d34b4b";
 
-                <h3 id="totalPoints">
-                    0
-                </h3>
+        return;
+    }
 
-                <p>
-                    Eco Points
-                </p>
 
-            </div>
+    const user = {
+        name:name,
+        email:email,
+        password:password,
+        waste:[],
+        points:0
+    };
 
 
-            <div class="stat-card">
+    localStorage.setItem(
+        "ecoUser",
+        JSON.stringify(user)
+    );
 
-                <div class="stat-icon">🌳</div>
 
-                <h3 id="treesSaved">
-                    0
-                </h3>
+    localStorage.setItem(
+        "ecoLoggedIn",
+        "true"
+    );
 
-                <p>
-                    Tree Impact
-                </p>
 
-            </div>
+    openApp();
+}
 
 
-            <div class="stat-card">
+/* =========================
+   SHOW LOGIN
+========================= */
 
-                <div class="stat-icon">🔥</div>
+function showLogin(){
 
-                <h3>
-                    7
-                </h3>
+    document.getElementById("loginPage").style.display = "flex";
 
-                <p>
-                    Day Streak
-                </p>
+    document.getElementById("registerPage").style.display = "none";
 
-            </div>
+    document.getElementById("loginMessage").textContent = "";
+}
 
-        </div>
 
+/* =========================
+   SHOW REGISTER
+========================= */
 
-        <!-- TWO COLUMN -->
+function showRegister(){
 
-        <div class="two-column">
+    document.getElementById("loginPage").style.display = "none";
 
+    document.getElementById("registerPage").style.display = "flex";
 
-            <!-- CATEGORIES -->
+    document.getElementById("registerMessage").textContent = "";
+}
 
-            <div class="panel">
 
-                <div class="panel-header">
+/* =========================
+   OPEN APP
+========================= */
 
-                    <h3>
-                        Waste Categories
-                    </h3>
+function openApp(){
 
+    const user = getUser();
+
+    if(!user){
+        showLogin();
+        return;
+    }
+
+
+    document.getElementById("loginPage").style.display = "none";
+
+    document.getElementById("registerPage").style.display = "none";
+
+    document.getElementById("app").style.display = "block";
+
+
+    document.getElementById("welcomeName").textContent =
+        user.name;
+
+    document.getElementById("profileName").textContent =
+        user.name;
+
+    document.getElementById("profileEmail").textContent =
+        user.email;
+
+
+    updateStats();
+}
+
+
+/* =========================
+   LOGOUT
+========================= */
+
+function logout(){
+
+    localStorage.setItem(
+        "ecoLoggedIn",
+        "false"
+    );
+
+    document.getElementById("app").style.display = "none";
+
+    document.getElementById("loginPage").style.display = "flex";
+
+    document.getElementById("loginEmail").value = "";
+
+    document.getElementById("loginPassword").value = "";
+
+    document.getElementById("loginMessage").textContent = "";
+}
+
+
+/* =========================
+   PAGE NAVIGATION
+========================= */
+
+function showPage(pageName){
+
+    const pages =
+        document.querySelectorAll(".page");
+
+    pages.forEach(function(page){
+        page.classList.remove("active");
+    });
+
+
+    document
+        .getElementById(pageName + "Page")
+        .classList.add("active");
+}
+
+
+/* =========================
+   ADD WASTE
+========================= */
+
+function addWaste(){
+
+    const name =
+        document.getElementById("wasteName").value.trim();
+
+    const category =
+        document.getElementById("wasteCategory").value;
+
+
+    if(name === ""){
+        alert("Please enter a waste item.");
+        return;
+    }
+
+
+    const user = getUser();
+
+    if(!user){
+        alert("Please login first.");
+        return;
+    }
+
+
+    if(!user.waste){
+        user.waste = [];
+    }
+
+
+    const item = {
+        name:name,
+        category:category,
+        date:new Date().toLocaleDateString()
+    };
+
+
+    user.waste.push(item);
+
+    user.points =
+        (user.points || 0) + 10;
+
+
+    localStorage.setItem(
+        "ecoUser",
+        JSON.stringify(user)
+    );
+
+
+    document.getElementById("wasteName").value = "";
+
+
+    updateStats();
+    displayActivity();
+}
+
+
+/* =========================
+   UPDATE STATS
+========================= */
+
+function updateStats(){
+
+    const user = getUser();
+
+    if(!user){
+        return;
+    }
+
+
+    const wasteCount =
+        user.waste ? user.waste.length : 0;
+
+    const points =
+        user.points || 0;
+
+    const trees =
+        Math.floor(points / 100);
+
+
+    document.getElementById("totalWaste")
+        .textContent = wasteCount;
+
+    document.getElementById("totalPoints")
+        .textContent = points;
+
+    document.getElementById("treesSaved")
+        .textContent = trees;
+
+    document.getElementById("profileWaste")
+        .textContent = wasteCount;
+
+    document.getElementById("profilePoints")
+        .textContent = points;
+
+
+    displayActivity();
+}
+
+
+/* =========================
+   DISPLAY ACTIVITY
+========================= */
+
+function displayActivity(){
+
+    const user = getUser();
+
+    const list =
+        document.getElementById("activityList");
+
+
+    if(!user || !user.waste || user.waste.length === 0){
+
+        list.innerHTML =
+            '<p style="color:#777;margin-top:15px;">No waste tracked yet.</p>';
+
+        return;
+    }
+
+
+    list.innerHTML = "";
+
+
+    const recent =
+        user.waste.slice(-10).reverse();
+
+
+    recent.forEach(function(item){
+
+        let icon = "♻️";
+
+        if(item.category === "Plastic"){
+            icon = "🥤";
+        }
+
+        if(item.category === "Organic"){
+            icon = "🍎";
+        }
+
+        if(item.category === "Paper"){
+            icon = "📦";
+        }
+
+        if(item.category === "E-Waste"){
+            icon = "🔋";
+        }
+
+
+        const div =
+            document.createElement("div");
+
+        div.className = "activity-item";
+
+
+        div.innerHTML = `
+            <div class="activity-left">
+                <span>${icon}</span>
+                <div>
+                    <strong>${escapeHTML(item.name)}</strong>
+                    <small style="display:block;color:#888;">
+                        ${escapeHTML(item.category)} • ${escapeHTML(item.date)}
+                    </small>
                 </div>
-
-                <div class="category-grid">
-
-                    <div class="category">
-
-                        <div class="category-icon">
-                            🍎
-                        </div>
-
-                        <h4>
-                            Organic
-                        </h4>
-
-                        <p>
-                            Food & biodegradable waste
-                        </p>
-
-                    </div>
-
-
-                    <div class="category">
-
-                        <div class="category-icon">
-                            🥤
-                        </div>
-
-                        <h4>
-                            Plastic
-                        </h4>
-
-                        <p>
-                            Bottles & packaging
-                        </p>
-
-                    </div>
-
-
-                    <div class="category">
-
-                        <div class="category-icon">
-                            📦
-                        </div>
-
-                        <h4>
-                            Paper
-                        </h4>
-
-                        <p>
-                            Paper & cardboard
-                        </p>
-
-                    </div>
-
-
-                    <div class="category">
-
-                        <div class="category-icon">
-                            🔋
-                        </div>
-
-                        <h4>
-                            E-Waste
-                        </h4>
-
-                        <p>
-                            Electronics & batteries
-                        </p>
-
-                    </div>
-
-                </div>
-
             </div>
 
-
-            <!-- GOAL -->
-
-            <div class="panel">
-
-                <div class="panel-header">
-
-                    <h3>
-                        Monthly Goal
-                    </h3>
-
-                    <strong>
-                        68%
-                    </strong>
-
-                </div>
-
-                <div class="progress-box">
-
-                    <div class="progress-info">
-
-                        <span>
-                            Waste reduction
-                        </span>
-
-                        <span>
-                            68 / 100
-                        </span>
-
-                    </div>
-
-                    <div class="progress-bar">
-
-                        <div class="progress-fill"></div>
-
-                    </div>
-
-                </div>
-
-                <p style="color:#77827a; line-height:1.6;">
-                    You're doing great! Keep tracking
-                    your waste to reach your monthly goal.
-                </p>
-
-            </div>
-
-        </div>
-
-    </main>
+            <span class="points">+10 ⭐</span>
+        `;
 
 
-    <!-- ================================================= -->
-    <!-- TRACKER -->
-    <!-- ================================================= -->
-
-    <main
-        id="trackerPage"
-        class="content page"
-    >
-
-        <div class="welcome">
-
-            <h1>
-                Waste Tracker ♻️
-            </h1>
-
-            <p>
-                Record what you throw away and make it count.
-            </p>
-
-        </div>
+        list.appendChild(div);
+    });
+}
 
 
-        <div class="tracker-card">
+/* =========================
+   SECURITY HELPER
+========================= */
 
-          
+function escapeHTML(text){
+
+    const div =
+        document.createElement("div");
+
+    div.textContent = text;
+
+    return div.innerHTML;
+}
+
+
+/* =========================
+   AUTO LOGIN
+========================= */
+
+window.addEventListener("DOMContentLoaded", function(){
+
+    const loggedIn =
+        localStorage.getItem("ecoLoggedIn");
+
+
+    if(
+        loggedIn === "true"
+        &&
+        getUser()
+    ){
+
+        openApp();
+
+    }else{
+
+        showLogin();
+    }
+
+});
+
+</script>
+
+</body>
+</html>
